@@ -1,0 +1,6 @@
+# 원본 사진·변환 작업 파일(저장소에 올리지 않음)
+_work/
+.taste-skill/
+.impeccable/hook.cache.json
+.DS_Store
+node_modules/

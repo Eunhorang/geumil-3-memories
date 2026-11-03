@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>2026년 금일초 3학년의 추억</title>
+  <meta name="description" content="금일초등학교 3학년 우리 반의 3월부터 10월까지를 맑은 그림으로 다시 그린 웹사진전">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="theme-color" content="#a8dcf6">
+  <meta name="apple-mobile-web-app-title" content="3학년의 추억">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:title" content="2026년 금일초 3학년의 추억">
+  <meta property="og:description" content="3월부터 10월까지, 우리 반이 함께한 날들을 그림으로 다시 만나요">
+  <meta property="og:image" content="https://eunhorang.github.io/geumil-3-memories/img/og.jpg">
+  <link rel="icon" href="icons/icon-192.png" type="image/png">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <script>document.documentElement.classList.add('js');</script>
+  <script src="js/app.js" defer></script>
+</head>
+<body>
+  <a class="skip" href="#months">전시로 바로 가기</a>
+
+  <main>
+    <section class="hero" id="top" aria-labelledby="site-title">
+      <h1 id="site-title" class="hero-name">
+        <span class="half half-a"><span class="half-in">2026년 금일초</span></span>
+        <span class="half half-b"><span class="half-in">3학년의 추억</span></span>
+      </h1>
+      <div class="hero-copy">
+        <p class="hero-lead">3월부터 10월까지 우리 반이 함께한 날들을 맑은 그림 <span data-count>27</span>장으로 다시 그렸어요.</p>
+        <a class="button" href="#m3">3월부터 보기</a>
+      </div>
+      <nav class="hero-links" aria-label="바로 가기">
+        <a class="link" href="#reel">한 장씩 넘겨 보기</a>
+        <a class="link" href="#index">일정표</a>
+        <a class="link" href="#share">QR·공유</a>
+      </nav>
+      <figure class="hero-picture">
+        <img data-art="2026-04-13-1" src="img/art/2026-04-13-1.webp" width="1328" height="992" alt="같은 반티를 입고 학교 화단 앞 돌담에 나란히 앉아 손 인사를 하는 친구들" fetchpriority="high">
+      </figure>
+    </section>
+
+    <section class="reel" id="reel" aria-labelledby="reel-title">
+        <div class="reel-copy">
+          <h2 id="reel-title" class="reel-title">여덟 달을 한 장으로</h2>
+          <p class="reel-help">막대를 밀면 찍은 날짜 순서대로 그림이 바뀌어요. 그림을 누르면 크게 보여요.</p>
+          <p class="reel-now" aria-live="polite"><time class="reel-date" datetime="2026-03-31">3월 31일</time><span class="reel-name">운동장 골대 앞에서</span></p>
+        </div>
+        <div class="reel-stage">
+          <button class="reel-frame" type="button" aria-label="이 그림 크게 보기">
+            <img class="reel-img is-on" data-art="2026-03-31-1" src="img/art/2026-03-31-1-s.webp" width="720" height="405" alt="인조 잔디 운동장의 축구 골대 앞에 모여 앉고 선 친구들">
+          </button>
+          <div class="reel-control">
+            <label class="sr-only" for="reel-range">날짜 고르기</label>
+            <input class="reel-range" id="reel-range" type="range" min="0" max="26" step="1" value="0">
+            <ol class="reel-months" aria-hidden="true"></ol>
+          </div>
+        </div>
+    </section>
+
+    <section class="months" id="months" aria-labelledby="months-title">
+      <div class="months-head">
+        <h2 id="months-title" class="section-title">달별 전시</h2>
+        <p class="months-intro">그림을 누르면 크게 볼 수 있고 원본 사진도 열어 볼 수 있어요.</p>
+        <nav class="month-jump" aria-label="달 고르기"></nav>
+      </div>
+      <div class="month-list" id="month-list" aria-busy="true">
+        <noscript><p class="months-intro">전시를 보려면 브라우저에서 자바스크립트를 켜 주세요.</p></noscript>
+      </div>
+    </section>
+
+    <section class="index" id="index" aria-labelledby="index-title">
+      <div class="index-head">
+        <h2 id="index-title" class="section-title">한눈에 보는 일정표</h2>
+        <p class="index-note">줄을 누르면 그 그림이 크게 열려요. 원본 사진은 큰 그림 아래 <strong>원본 사진</strong>을 누르고 선생님께 받은 비밀번호를 넣으면 볼 수 있어요.</p>
+      </div>
+      <div class="index-table" id="index-table"></div>
+    </section>
+
+    <section class="share" id="share" aria-labelledby="share-title">
+      <h2 id="share-title" class="share-title">휴대폰 카메라로 QR을 찍으면 바로 열려요</h2>
+      <figure class="share-qr">
+        <img src="qr/사이트주소-QR.svg" width="300" height="300" alt="이 전시 주소로 가는 QR 코드">
+      </figure>
+      <button class="share-address" type="button" data-copy="https://eunhorang.github.io/geumil-3-memories/" aria-describedby="share-toast">
+        <span>eunhorang.github.io/</span><span>geumil-3-memories</span>
+      </button>
+      <p class="share-toast" id="share-toast" role="status">주소를 누르면 복사돼요</p>
+      <div class="share-foot">
+        <p>금일초등학교 3학년 · 전남 완도군 금일읍</p>
+        <div class="share-actions">
+          <button class="button button-light" type="button" data-share>공유하기</button>
+          <button class="text-button" type="button" data-copy="https://eunhorang.github.io/geumil-3-memories/">주소 복사</button>
+          <a class="text-button" href="qr/사이트주소-QR.png" download="2026 금일초 3학년의 추억 QR.png">QR 그림 저장</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-foot">
+    <figure class="foot-picture">
+      <img data-art="2026-10-22-4" src="img/art/2026-10-22-4.webp" width="1328" height="992" alt="문화교실 현수막을 들고 교실에 모인 친구들과 선생님들" loading="lazy">
+    </figure>
+    <div class="foot-side">
+      <p class="foot-mark">2026년 금일초 3학년의 추억</p>
+      <nav class="foot-menu" aria-label="달별 전시로 가기"></nav>
+      <div class="foot-notes">
+        <p>그림은 학급 사진을 바탕으로 이 전시를 위해 AI로 다시 그렸어요.</p>
+        <p>원본 사진은 비밀번호로 잠가 두었어요. <a class="link" href="#top">맨 위로</a></p>
+      </div>
+    </div>
+  </footer>
+
+  <dialog class="viewer" id="viewer" aria-labelledby="viewer-title">
+    <div class="viewer-stage">
+      <p class="viewer-status" role="status" hidden></p>
+    </div>
+    <div class="viewer-bar">
+      <div class="viewer-caption">
+        <h2 id="viewer-title" class="viewer-title"></h2>
+        <p class="viewer-meta"></p>
+      </div>
+      <div class="viewer-actions">
+        <button class="button viewer-toggle" type="button" aria-pressed="false">원본 사진</button>
+        <a class="text-button viewer-save" href="#" download hidden>사진 저장</a>
+      </div>
+    </div>
+    <button class="viewer-close" type="button">닫기</button>
+    <button class="viewer-step viewer-prev" type="button" aria-label="이전 그림"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <button class="viewer-step viewer-next" type="button" aria-label="다음 그림"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
+
+    <form class="keyform" hidden>
+      <h3 class="keyform-title">원본 사진 열기</h3>
+      <p class="keyform-help">선생님께 받은 비밀번호를 넣어 주세요. 한 번 넣으면 브라우저를 닫기 전까지 다시 묻지 않아요.</p>
+      <label class="keyform-field"><span>비밀번호</span><input type="password" name="password" autocomplete="current-password" required></label>
+      <label class="keyform-remember"><input type="checkbox" name="remember"> 이 기기에서 기억하기</label>
+      <p class="keyform-error" role="alert"></p>
+      <div class="keyform-actions">
+        <button class="button" type="submit">열기</button>
+        <button class="text-button keyform-cancel" type="button">그림으로 돌아가기</button>
+      </div>
+    </form>
+  </dialog>
+</body>
+</html>

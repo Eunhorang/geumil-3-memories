@@ -1,0 +1,41 @@
+{
+  "source": "../금일초 3학년 학급 사진",
+  "skip": [
+    "IMG_8863.jpeg",
+    "IMG_9365.jpeg"
+  ],
+  "keychain": {
+    "service": "geumil-3-memories",
+    "account": "originals"
+  },
+  "original": {
+    "long": 2560,
+    "quality": 82
+  },
+  "art": {
+    "small": 720,
+    "quality": 82
+  },
+  "model": {
+    "engine": "mlx-serve",
+    "name": "mlx-community/flux2-klein-9b-4bit",
+    "port": 11234,
+    "seed": 2026
+  },
+  "featured": "2026-04-13-1",
+  "seeds": {
+    "2026-06-18-1": 21,
+    "2026-10-22-3": 21
+  },
+  "hints": {
+    "2026-05-06-1": "exactly two girls, about 9 years old, eating lunch boxes on a bench",
+    "2026-05-08-1": "exactly two children in front, a girl and a boy about 9 years old, with only a few tiny people far in the background",
+    "2026-06-18-1": "exactly three little girls, third graders about 9 years old, small children with round childlike faces",
+    "2026-07-09-2": "children about 9 years old with two adult women teachers; the woman helping at the right is a young woman with long dark hair in a ponytail and glasses, wearing a beige T-shirt",
+    "2026-09-22-2": "exactly two girls about 9 years old sitting side by side on a bench, and nobody else; the wall behind them is empty except for fossils",
+    "2026-10-22-2": "exactly two children about 9 years old: a girl in a long floral dress and a boy wearing a tall pointed hat"
+  },
+  "solo": [
+    "2026-10-22-3"
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "name": "2026년 금일초 3학년의 추억",
+  "short_name": "3학년의 추억",
+  "description": "금일초등학교 3학년 우리 반의 3월부터 10월까지를 맑은 그림으로 다시 그린 웹사진전",
+  "lang": "ko-KR",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#a8dcf6",
+  "theme_color": "#a8dcf6",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}
