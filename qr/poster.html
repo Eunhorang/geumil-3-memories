@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<title>2026년 금일초 3학년의 추억 — QR 안내문</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+/* A4 한 장 안내문. 크롬 헤드리스로 PDF를 뽑는다(tools/poster.sh).
+   QR 그림은 swift tools/qr.swift make 로 만든 사이트주소-QR.svg, 위 그림은 전시의 대표 그림을 그대로 쓴다. */
+@font-face { font-family: "DoHyeonLocal"; src: url("file:///Users/macstudio/Library/Fonts/DoHyeon-Regular.ttf"); }
+:root {
+  --sky: #a8dcf6;
+  --sky-pale: #e6f5fd;
+  --ink: #052744;
+  --muted: #2b5574;
+  --buoy: #ff6b1a;
+  --display: "DoHyeonLocal", "Do Hyeon", sans-serif;
+  --text: "Pretendard Variable", "Apple SD Gothic Neo", sans-serif;
+}
+@page { size: A4; margin: 0; }
+* { box-sizing: border-box; }
+html, body { margin: 0; background: #fff; color: var(--ink); font-family: var(--text); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.page { position: relative; width: 210mm; height: 297mm; overflow: hidden; display: flex; flex-direction: column; }
+.art { height: 120mm; flex: none; background: var(--sky); }
+.art img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: 50% 58%; }
+.body { flex: 1; display: grid; grid-template-columns: 1fr 74mm; column-gap: 12mm; padding: 11mm 15mm 0; }
+h1 { margin: 0; font: 400 44pt/0.98 var(--display); letter-spacing: -0.02em; word-break: keep-all; }
+.lead { margin: 5mm 0 0; font-size: 13.5pt; line-height: 1.5; font-weight: 500; word-break: keep-all; }
+.steps { margin: 10mm 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 8mm; }
+.steps li { display: grid; grid-template-columns: 11mm 1fr; column-gap: 4.5mm; align-items: start; }
+.steps .num { display: flex; align-items: center; justify-content: center; width: 11mm; height: 11mm; border-radius: 50%; background: var(--buoy); color: var(--ink); font: 400 17pt/1 var(--display); padding-top: 0.6mm; }
+.steps b { display: block; font-size: 14.5pt; font-weight: 700; line-height: 1.35; }
+.steps .desc { display: block; margin-top: 1.2mm; font-size: 12pt; line-height: 1.5; color: var(--muted); word-break: keep-all; }
+.side { display: flex; flex-direction: column; align-items: stretch; }
+.qr { padding: 5mm; border-radius: 6mm; background: var(--sky-pale); }
+.qr img { display: block; width: 100%; height: auto; background: #fff; border-radius: 2mm; }
+.url { margin: 4mm 0 0; font: 400 13.5pt/1.15 var(--display); text-align: center; word-break: break-all; }
+.scan { margin: 2.5mm 0 0; font-size: 10.5pt; text-align: center; color: var(--muted); }
+.foot { flex: none; display: flex; justify-content: space-between; align-items: center; gap: 8mm; margin-top: 9mm; padding: 6mm 15mm; background: var(--ink); color: #f4fbff; font-size: 10.5pt; }
+.foot strong { font: 400 14pt/1 var(--display); }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="art"><img src="../img/art/2026-04-13-1.webp" alt="반티를 입고 학교 화단 앞 돌담에 나란히 앉은 3학년 친구들을 그린 그림"></div>
+  <div class="body">
+    <div class="main">
+      <h1>2026년 금일초<br>3학년의 추억</h1>
+      <p class="lead">우리 반의 3월부터 10월까지를 맑은 그림 27장으로 다시 그린 웹사진전이에요.</p>
+      <ol class="steps">
+        <li><span class="num">1</span><div><b>휴대폰 카메라로 QR을 찍어요</b><span class="desc">카메라 앱을 켜고 QR에 비추면 주소가 떠요.</span></div></li>
+        <li><span class="num">2</span><div><b>달별로 그림을 넘겨 봐요</b><span class="desc">그림을 누르면 크게 보이고 옆으로 밀면 다음 그림으로 넘어가요.</span></div></li>
+        <li><span class="num">3</span><div><b>원본 사진은 비밀번호로 열어요</b><span class="desc">큰 그림 아래 '원본 사진'을 누르고 담임 선생님께 받은 비밀번호를 넣으면 볼 수 있어요.</span></div></li>
+      </ol>
+    </div>
+    <div class="side">
+      <div class="qr"><img src="사이트주소-QR.svg" alt="웹사진전 주소 QR 코드"></div>
+      <p class="url">eunhorang.github.io/<br>geumil-3-memories</p>
+      <p class="scan">홈 화면에 추가하면 앱처럼 열 수 있어요.</p>
+    </div>
+  </div>
+  <div class="foot">
+    <strong>금일초등학교 3학년 · 2026</strong>
+    <span>사진과 그림은 우리 반의 기록이에요. 다른 곳에 옮겨 올리지 말아 주세요.</span>
+  </div>
+</div>
+</body>
+</html>

@@ -4,6 +4,7 @@
 
 - 주소: <https://eunhorang.github.io/geumil-3-memories/>
 - QR 코드: `qr/사이트주소-QR.png`(인쇄용, 약 10cm) · `qr/사이트주소-QR.svg`
+- A4 안내문: `qr/QR-안내문.pdf`(인쇄용) · `qr/QR-안내문.png`. 문구를 고치면 `qr/poster.html`을 바꾸고 `zsh tools/poster.sh`로 다시 뽑습니다.
 
 ## 어떻게 만들었나
 
