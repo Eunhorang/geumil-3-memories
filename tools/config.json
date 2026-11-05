@@ -2,7 +2,9 @@
   "source": "../금일초 3학년 학급 사진",
   "skip": [
     "IMG_8863.jpeg",
-    "IMG_9365.jpeg"
+    "IMG_9365.jpeg",
+    "IMG_7452.JPG",
+    "IMG_7643.JPG"
   ],
   "keychain": {
     "service": "geumil-3-memories",

@@ -3,6 +3,9 @@
 cd "${0:A:h}/.." || exit 1
 CH="/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 SRC="file://$PWD/qr/poster.html"
+# 안내문의 그림 수를 data/gallery.json에 맞춘다(사진을 더하거나 뺀 뒤 다시 뽑으면 저절로 맞음).
+N=$(/usr/bin/python3 -c 'import json;print(len(json.load(open("data/gallery.json"))["photos"]))')
+/usr/bin/sed -i '' -E "s#(<span data-count>)[0-9]+#\\1$N#" qr/poster.html
 "$CH" --headless=new --disable-gpu --allow-file-access-from-files --no-pdf-header-footer \
   --virtual-time-budget=15000 --print-to-pdf="$PWD/qr/QR-안내문.pdf" "$SRC" >/dev/null 2>&1
 "$CH" --headless=new --disable-gpu --hide-scrollbars --allow-file-access-from-files --force-device-scale-factor=2 \
