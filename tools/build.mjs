@@ -241,7 +241,9 @@ for (const photo of data.photos) {
 }
 
 // 링크 미리보기 그림(카카오톡 등): 대표 그림을 1200×630으로 자른다.
-const featuredArt = join(DIRS.art, `${config.featured}.png`);
+// 첫 화면 대표 그림(img/hero.webp)이 있으면 그것으로, 없으면 config.featured 그림으로 만든다.
+const hero = join(ROOT, 'img/hero.webp');
+const featuredArt = existsSync(hero) ? hero : join(DIRS.art, `${config.featured}.png`);
 const og = join(ROOT, 'img/og.jpg');
 if (newer(featuredArt, og)) run('magick', [featuredArt, '-resize', '1200x630^', '-gravity', 'center', '-extent', '1200x630', '-strip', '-quality', '82', og]);
 

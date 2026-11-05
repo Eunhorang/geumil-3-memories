@@ -25,7 +25,8 @@
   "featured": "2026-04-13-1",
   "seeds": {
     "2026-06-18-1": 21,
-    "2026-10-22-3": 21
+    "2026-10-22-3": 21,
+    "2026-09-22-4": 99
   },
   "hints": {
     "2026-05-06-1": "exactly two girls, about 9 years old, eating lunch boxes on a bench",
@@ -36,6 +37,7 @@
     "2026-10-22-2": "exactly two children about 9 years old: a girl in a long floral dress and a boy wearing a tall pointed hat"
   },
   "solo": [
-    "2026-10-22-3"
+    "2026-10-22-3",
+    "2026-09-22-4"
   ]
 }
