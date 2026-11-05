@@ -4,10 +4,11 @@
 //   node tools/build.mjs --rekey    비밀번호를 바꾼 뒤 원본 전체를 새 비밀번호로 다시 암호화
 //   node tools/build.mjs --no-encrypt   원본 암호화를 건너뜀(비밀번호를 아직 정하지 않았을 때)
 //   node tools/build.mjs --standin      개발용 임시 이미지도 만듦(_work/standin)
+// 이미 그림으로 된 파일은 학급 사진 폴더 안 '완성 그림'에 'YYYY-MM-DD 제목.webp'처럼 넣으면 변환 없이 그대로 건다(원본 사진 칸 없음).
 // 비밀번호는 macOS 키체인(tools/set-password.sh로 저장)에서 읽는다. 시험할 때만 GEUMIL_PASSWORD 환경 변수를 쓴다.
 import { execFileSync } from 'node:child_process';
 import { createCipheriv, createDecipheriv, pbkdf2Sync, randomBytes } from 'node:crypto';
-import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from 'node:fs';
+import { existsSync, mkdirSync, readFileSync, readdirSync, renameSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { dirname, extname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -15,6 +16,8 @@ const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const config = JSON.parse(readFileSync(join(ROOT, 'tools/config.json'), 'utf8'));
 const DATA = join(ROOT, 'data/gallery.json');
 const SOURCE = resolve(ROOT, config.source);
+// 이미 그림으로 된 파일을 넣는 하위 폴더. 변환하지 않고 그대로 걸며 원본 사진은 없다(artOnly).
+const READY_DIR = (config.readyArt || '완성 그림').normalize('NFC');
 const WORK = join(ROOT, '_work');
 const DIRS = {
   input: join(WORK, 'input'),
@@ -26,6 +29,7 @@ const DIRS = {
 };
 const SRGB = '/System/Library/ColorSync/Profiles/sRGB Profile.icc';
 const IMAGE_EXT = new Set(['.jpg', '.jpeg', '.png', '.heic', '.heif']);
+const READY_EXT = new Set([...IMAGE_EXT, '.webp']);
 const ITERATIONS = 600000;
 const CHECK_TEXT = 'geumil-3-memories';
 
@@ -89,6 +93,22 @@ function registerNewPhotos() {
     data.photos.push(photo);
     added.push(photo);
   }
+  // 완성 그림: 날짜는 파일 이름 앞의 YYYY-MM-DD에서 읽고(그림 파일에는 촬영 정보가 없다), 제목은 날짜 뒤 글자에서 가져온다.
+  const readyDir = join(SOURCE, READY_DIR);
+  if (existsSync(readyDir)) {
+    for (const name of readdirSync(readyDir)) {
+      const n = nfc(name);
+      if (name.startsWith('.') || !READY_EXT.has(extname(n).toLowerCase())) continue;
+      const source = `${READY_DIR}/${n}`;
+      if (known.has(source) || skip.has(source) || skip.has(n)) continue;
+      const m = n.match(/^(\d{4})-(\d{2})-(\d{2})/);
+      if (!m) { console.log(`완성 그림은 파일 이름 앞에 날짜를 붙여 주세요(예: 2026-11-05 오카리나.webp): ${n}`); continue; }
+      const title = titleFromName(n.slice(10).replace(/^[\s_-]+/, ''));
+      const photo = { id: '', source, taken: `${m[1]}-${m[2]}-${m[3]}T12:00:00`, title: title || '새 그림', event: '', alt: title ? `${title} 장면을 그린 그림` : '친구들과 함께한 날을 그린 그림', artOnly: true };
+      data.photos.push(photo);
+      added.push(photo);
+    }
+  }
   data.photos.sort((a, b) => a.taken.localeCompare(b.taken));
   // 새로 들어온 사진만 아이디를 붙인다(이미 있는 아이디는 바꾸지 않는다).
   const used = new Set(data.photos.filter((p) => p.id).map((p) => p.id));
@@ -105,9 +125,12 @@ function registerNewPhotos() {
 // ---------- 이미지 만들기 ----------
 function sourcePath(photo) {
   const want = nfc(photo.source);
-  const hit = readdirSync(SOURCE).find((name) => nfc(name) === want);
+  const cut = want.lastIndexOf('/');
+  const dir = cut < 0 ? SOURCE : join(SOURCE, want.slice(0, cut));
+  const base = want.slice(cut + 1);
+  const hit = existsSync(dir) ? readdirSync(dir).find((name) => nfc(name) === base) : null;
   if (!hit) throw new Error(`원본을 찾지 못했습니다: ${photo.source}`);
-  const file = join(SOURCE, hit);
+  const file = join(dir, hit);
   const ext = extname(want).toLowerCase();
   if (ext === '.heic' || ext === '.heif') {
     const jpg = join(DIRS.tmp, `${photo.id}.jpg`);
@@ -131,6 +154,7 @@ function modelSize(w, h) {
 }
 
 function makeModelInput(photo) {
+  if (photo.artOnly) return null;
   const out = join(DIRS.input, `${photo.id}.png`);
   if (existsSync(out)) return out;
   const src = sourcePath(photo);
@@ -154,9 +178,20 @@ function makeWebp(png, dir, id) {
 // 그림이 있으면 WebP를 만들고 ready로 표시한다. 그림이 없어도 크기는 변환 입력과 같으므로 미리 적어 둔다.
 function makeArt(photo, input) {
   const png = join(DIRS.art, `${photo.id}.png`);
+  // 완성 그림은 받은 파일을 그대로 쓰고, 변환 그림과 비슷한 크기(약 133만 화소)를 넘을 때만 줄인다.
+  if (photo.artOnly) {
+    let src = null;
+    try { src = sourcePath(photo); } catch (err) { if (!existsSync(png)) throw err; }
+    if (src && newer(src, png)) {
+      const [w, h] = size(src);
+      const scale = Math.min(1, Math.sqrt((1536 * 864) / (w * h)));
+      const resize = scale < 1 ? ['-resize', `${Math.round(w * scale)}x${Math.round(h * scale)}!`] : [];
+      run('magick', [`${src}[0]`, '-auto-orient', '-profile', SRGB, '-strip', ...resize, png]);
+    }
+  }
   photo.ready = existsSync(png);
   const small = photo.ready ? makeWebp(png, DIRS.webArt, photo.id) : null;
-  if (STANDIN) makeWebp(input, DIRS.standin, photo.id);
+  if (STANDIN) makeWebp(input || png, DIRS.standin, photo.id);
   photo.art = size(photo.ready ? join(DIRS.webArt, `${photo.id}.webp`) : input);
   photo.tone = '#' + run('magick', [small || input, '-resize', '1x1!', '-format', '%[hex:p{0,0}]', 'info:']).slice(0, 6).toLowerCase();
   return photo.ready;
@@ -211,6 +246,7 @@ function prepareKey(password) {
 }
 
 function makeOriginal(photo, key) {
+  if (photo.artOnly) return;
   const out = join(DIRS.webPhoto, `${photo.id}.bin`);
   if (existsSync(out) && !rewriteAll && photo.photo) return;
   const src = sourcePath(photo);
@@ -253,6 +289,29 @@ for (const dir of [DIRS.webArt, DIRS.webPhoto]) {
   for (const name of readdirSync(dir)) {
     const id = name.replace(/(-s)?\.(webp|bin)$/, '');
     if (!ids.has(id)) rmSync(join(dir, name));
+  }
+}
+// 변환 작업 파일은 _work/removed로 옮긴다. 남겨 두면 나중에 같은 날짜 사진이 그 아이디를 받아 옛 그림이 붙는다.
+for (const dir of [DIRS.input, DIRS.art]) {
+  for (const name of readdirSync(dir)) {
+    const m = name.match(/^(\d{4}-\d{2}-\d{2}-\d+)\.png$/);
+    if (!m || ids.has(m[1])) continue;
+    const removed = join(WORK, 'removed');
+    mkdirSync(removed, { recursive: true });
+    renameSync(join(dir, name), join(removed, `${Date.now()}-${dir === DIRS.art ? 'art' : 'input'}-${name}`));
+  }
+}
+
+// 화면 문구의 달 범위("3월부터 N월까지")와 그림 수(<span data-count>)를 전시 사진에 맞춘다.
+const months = data.photos.map((p) => Number(p.taken.slice(5, 7)));
+if (months.length) {
+  const range = `${months[0]}월부터 ${months[months.length - 1]}월까지`;
+  for (const rel of ['index.html', 'manifest.webmanifest', 'README.md', 'js/app.js', 'qr/poster.html']) {
+    const file = join(ROOT, rel);
+    if (!existsSync(file)) continue;
+    const before = readFileSync(file, 'utf8');
+    const after = before.replace(/\d{1,2}월부터 \d{1,2}월까지/g, range).replace(/(<span data-count>)\d+(<\/span>)/g, `$1${data.photos.length}$2`);
+    if (after !== before) { writeFileSync(file, after); console.log(`문구를 맞춤: ${rel}`); }
   }
 }
 

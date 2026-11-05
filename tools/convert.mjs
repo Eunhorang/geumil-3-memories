@@ -32,6 +32,7 @@ const outDir = join(ROOT, '_work/art');
 mkdirSync(outDir, { recursive: true });
 
 const jobs = photos.filter((p) => {
+  if (p.artOnly) return false; // 완성 그림은 변환하지 않는다
   if (only && !only.includes(p.id)) return false;
   if (!existsSync(join(ROOT, '_work/input', `${p.id}.png`))) { console.log(`입력이 없어 건너뜀: ${p.id} (node tools/build.mjs 먼저)`); return false; }
   return force || !existsSync(join(outDir, `${p.id}.png`));

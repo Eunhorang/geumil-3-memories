@@ -304,6 +304,7 @@ html:not(.js) .reel-control { display: none; }
 .viewer-meta { font-size: var(--step-small); color: var(--night-muted); margin-top: 4px; }
 .viewer-actions { display: flex; align-items: center; gap: 20px; }
 .viewer-toggle[aria-pressed="true"] { background: var(--paper); }
+.viewer-toggle[hidden] { display: none; }
 .viewer-save { color: var(--night-ink); }
 .viewer-close {
   position: absolute; top: calc(12px + env(safe-area-inset-top)); right: 16px;

@@ -296,11 +296,14 @@
       this.meta.textContent = [longDate(p), p.event].filter(Boolean).join(' · ');
       const near = photos[(i + 1) % photos.length];
       new Image().src = artFull(near);
-      if (this.mode === 'photo' && vault.key) this.showPhoto();
-      else this.showArt();
+      // 완성 그림으로 받은 것은 원본 사진이 없어 단추를 숨긴다(원본 보기 중이었다면 다음 사진에서 이어 간다).
+      const hasPhoto = Boolean(p.photo);
+      this.toggle.hidden = !hasPhoto;
+      if (this.mode === 'photo' && vault.key && hasPhoto) this.showPhoto();
+      else this.showArt(!hasPhoto);
     },
-    showArt() {
-      this.mode = 'art';
+    showArt(keepMode = false) {
+      if (!keepMode) this.mode = 'art';
       this.token += 1;
       this.art.classList.remove('is-out');
       this.photo.classList.add('is-out');
@@ -384,7 +387,7 @@
     shareButton.addEventListener('click', async () => {
       const url = 'https://eunhorang.github.io/geumil-3-memories/';
       if (navigator.share) {
-        try { await navigator.share({ title: document.title, text: '우리 반의 3월부터 10월까지를 그림으로 만나요', url }); } catch { /* 닫음 */ }
+        try { await navigator.share({ title: document.title, text: '우리 반의 3월부터 11월까지를 그림으로 만나요', url }); } catch { /* 닫음 */ }
       } else copy(url);
     });
   }
