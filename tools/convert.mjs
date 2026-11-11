@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-// 학급 사진을 MLX-Serve의 FLUX.2 klein으로 청량한 애니메이션 그림으로 바꾼다(사진은 이 맥 밖으로 나가지 않는다).
+// 학급 사진을 MLX-Serve의 그림 모델(config.json model.name, 지금은 Qwen-Image-2.1 Turbo)로 청량한 애니메이션 그림으로 바꾼다(사진은 이 맥 밖으로 나가지 않는다).
 //   node tools/convert.mjs                  그림이 없는 사진만 변환
 //   node tools/convert.mjs --only <아이디…>  지정한 사진만 변환
 //   node tools/convert.mjs --only <아이디> --seed 7   마음에 안 드는 장면을 다른 씨앗으로 다시 그림(씨앗은 config.json seeds에 남는다)

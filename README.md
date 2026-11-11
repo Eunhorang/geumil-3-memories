@@ -9,7 +9,7 @@
 ## 어떻게 만들었나
 
 - 사진 속 촬영 일시(EXIF)를 읽어 달별로 나눴습니다.
-- 그림은 이 맥(맥스튜디오)의 MLX-Serve에서 FLUX.2 klein 9B(`mlx-community/flux2-klein-9b-4bit`)로 바꿨습니다. 사진은 맥 밖으로 나가지 않습니다. 프롬프트 원문은 `tools/prompt-ko.txt`, 모델에 넣은 영어 번역은 `tools/prompt.txt`에 있습니다.
+- 그림은 이 맥(맥스튜디오)의 MLX-Serve에서 Qwen-Image-2.1 Turbo(`ddalcu/Qwen-Image-2.1-Turbo-MLX-Serve-8bit`)로 바꿨습니다. 2026-11-11에 사진 속 표정을 그대로 살리도록 프롬프트를 고쳐 모두 다시 그렸습니다(그 전 FLUX.2 klein 그림은 `_work/art-flux-2026-11-11`에 보관). 사진은 맥 밖으로 나가지 않습니다. 프롬프트 원문은 `tools/prompt-ko.txt`, 모델에 넣은 영어 번역은 `tools/prompt.txt`에 있습니다.
 - 마음에 안 드는 장면은 `zsh tools/convert.sh --only <아이디> --seed <숫자>`로 다시 그립니다. 고른 씨앗은 `tools/config.json`의 `seeds`에 남습니다.
 - 원본 사진은 위치 정보(GPS)를 지우고 긴 변 2560px로 줄인 뒤 비밀번호로 암호화해서(AES-256-GCM, PBKDF2 60만 회) `img/photo/`에 올립니다. 비밀번호를 모르면 저장소를 열어 봐도 원본을 볼 수 없습니다.
 - 검색 엔진에 나오지 않도록 `robots.txt`와 `noindex`로 막아 두었습니다.
@@ -51,6 +51,6 @@ python3 -m http.server 4350
 ## 알아 둘 것
 
 - 학급 사진 원본 폴더와 변환 작업 파일(`_work/`)은 저장소에 올리지 않습니다.
-- 그림 변환에는 MLX-Serve 앱과 그 안에 받아 둔 `mlx-community/flux2-klein-9b-4bit`(8.8GB)가 필요합니다. 변환 도구는 서버가 꺼져 있으면 이 맥 안에서만 열리게(127.0.0.1) 잠깐 켰다가 끕니다.
+- 그림 변환에는 MLX-Serve 앱과 그 안에 받아 둔 `ddalcu/Qwen-Image-2.1-Turbo-MLX-Serve-8bit`(17GB)가 필요합니다. 변환 도구는 서버가 꺼져 있으면 이 맥 안에서만 열리게(127.0.0.1) 잠깐 켰다가 끕니다.
 - 글꼴: 도현체(Do Hyeon, OFL), Pretendard(OFL).
 - 그림과 사진은 금일초등학교 3학년 학급의 기록입니다. 허락 없이 옮기거나 다시 올리지 말아 주세요.
